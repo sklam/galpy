@@ -239,7 +239,7 @@ jobs:
         key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('.github/workflows/build.yml') }}-${{ matrix.REQUIRES_PYNBODY }}-${{ matrix.REQUIRES_ASTROPY }}-${{ matrix.REQUIRES_ASTROQUERY }}-${{ matrix.REQUIRES_NUMBA }}-${{ matrix.REQUIRES_JAX }}
     - name: Install Python dependencies
       run: |
-         pip install --upgrade --upgrade-strategy eager numpy>=2.0.0rc1 scipy matplotlib numexpr setuptools cython pytest tqdm
+         pip install --upgrade --upgrade-strategy eager --pre numpy>=2.0.0rc1 scipy matplotlib numexpr setuptools cython pytest tqdm
     - name: Install pynbody
       if: ${{ matrix.REQUIRES_PYNBODY }}
       env:

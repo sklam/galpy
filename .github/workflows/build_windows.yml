@@ -206,7 +206,7 @@ jobs:
         echo "$CONDA_PREFIX\\Library\\bin" >> $GITHUB_PATH # necessary when we don't activate the environment
     - name: Install Python dependencies
       run: |
-         pip install --upgrade --upgrade-strategy eager numpy scipy matplotlib numexpr setuptools cython pytest tqdm
+         pip install --upgrade --upgrade-strategy eager numpy>=2.0.0rc1 scipy matplotlib numexpr setuptools cython pytest tqdm
     - name: Install pynbody
       if: ${{ matrix.REQUIRES_PYNBODY }}
       run: |

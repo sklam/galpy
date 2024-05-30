@@ -246,10 +246,10 @@ jobs:
            brew install gcc@13 pipx
            echo "CC=/usr/local/bin/gcc-13" >> $GITHUB_ENV
            echo "CXX=/usr/local/bin/g++-13" >> $GITHUB_ENV
+           echo "LDFLAGS+='-Wl,-ld_classic'" >> $GITHUB_ENV
     - name: Install pynbody
       if: ${{ matrix.REQUIRES_PYNBODY }}
-      env:
-        LDFLAGS: -Wl,-ld_classic
+      #env:
       #  CC: gcc-11
       #  CXX: g++-11
       run: |

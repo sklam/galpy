@@ -240,11 +240,17 @@ jobs:
     - name: Install Python dependencies
       run: |
          pip install --upgrade --upgrade-strategy eager --pre numpy>=2.0.0rc1 scipy matplotlib numexpr setuptools cython pytest tqdm
+    - name: Install GCC (MacOS)
+      if: matrix.os == 'macos-12'
+      run: |
+           brew install gcc@13 pipx
+           echo "CC=/usr/local/bin/gcc-13" >> $GITHUB_ENV
+           echo "CXX=/usr/local/bin/g++-13" >> $GITHUB_ENV
     - name: Install pynbody
       if: ${{ matrix.REQUIRES_PYNBODY }}
-      env:
-        CC: gcc-11
-        CXX: g++-11
+      #env:
+      #  CC: gcc-11
+      #  CXX: g++-11
       run: |
          pip install --upgrade --upgrade-strategy eager h5py pandas pytz
          pip install --upgrade --upgrade-strategy eager wheel

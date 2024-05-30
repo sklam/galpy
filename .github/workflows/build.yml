@@ -243,9 +243,9 @@ jobs:
     - name: Install GCC (MacOS)
       if: matrix.os == 'macos-12'
       run: |
-           brew install gcc@13 pipx
-           echo "CC=/usr/local/bin/gcc-13" >> $GITHUB_ENV
-           echo "CXX=/usr/local/bin/g++-13" >> $GITHUB_ENV
+           brew install gcc@11 pipx
+           echo "CC=/usr/local/bin/gcc-11" >> $GITHUB_ENV
+           echo "CXX=/usr/local/bin/g++-11" >> $GITHUB_ENV
            echo "LDFLAGS+='-Wl,-ld_classic'" >> $GITHUB_ENV
     - name: Install pynbody
       if: ${{ matrix.REQUIRES_PYNBODY }}

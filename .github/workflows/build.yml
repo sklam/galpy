@@ -248,13 +248,14 @@ jobs:
            echo "CXX=/usr/local/bin/g++-13" >> $GITHUB_ENV
     - name: Install pynbody
       if: ${{ matrix.REQUIRES_PYNBODY }}
-      #env:
+      env:
+        LDFLAGS: -Wl,-ld_classic
       #  CC: gcc-11
       #  CXX: g++-11
       run: |
          pip install --upgrade --upgrade-strategy eager h5py pandas pytz
          pip install --upgrade --upgrade-strategy eager wheel
-         pip install --upgrade --upgrade-strategy eager git+https://github.com/pynbody/pynbody.git@refs/pull/823/head
+         pip install -v --upgrade --upgrade-strategy eager "git+https://github.com/pynbody/pynbody.git@refs/pull/823/head"
     - name: Install astropy
       if: ${{ matrix.REQUIRES_ASTROPY }}
       run: pip install astropy pyerfa

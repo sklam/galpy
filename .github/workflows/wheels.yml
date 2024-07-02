@@ -115,7 +115,9 @@ jobs:
           python-version: ${{ matrix.python[1] }}
       - name: Install wheel
         shell: bash
-        run: python -m pip install --find-links=./wheelhouse "galpy>=0.0.dev0" # Allow for pre-release versions for galpy only
+        run: |
+          ls ./wheelhouse
+          python -m pip install --find-links=./wheelhouse "galpy>=0.0.dev0" # Allow for pre-release versions for galpy only
       - name: Test built wheel in non-conda environment
         shell: bash
         working-directory: ${{ runner.temp }}

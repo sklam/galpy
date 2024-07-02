@@ -117,9 +117,8 @@ jobs:
       - name: Install wheel
         shell: bash
         run: |
-          unzip ./wheelhouse/${{ matrix.python[0] }}-${{ matrix.buildplat[1] }}_${{ matrix.buildplat[2] }} -d ./wheelhouse
           ls ./wheelhouse
-          python -m pip install --find-links=./wheelhouse "galpy>=0.0.dev0" # Allow for pre-release versions for galpy only
+          python -m pip install --find-links=./wheelhouse "galpy>=1.10.0.dev0" # Allow for pre-release versions for galpy only
       - name: Test built wheel in non-conda environment
         shell: bash
         working-directory: ${{ runner.temp }}

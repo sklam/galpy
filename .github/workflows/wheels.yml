@@ -110,6 +110,7 @@ jobs:
       - run: mkdir wheelhouse
       - uses: actions/download-artifact@v4
         with:
+          name: ${{ matrix.python[0] }}-${{ matrix.buildplat[1] }}_${{ matrix.buildplat[2] }}
           path: wheelhouse/
       - uses: actions/setup-python@v5
         with:
@@ -118,7 +119,7 @@ jobs:
         shell: bash
         run: |
           ls ./wheelhouse
-          python -m pip install --find-links=./wheelhouse "galpy>=1.10.0.dev0" # Allow for pre-release versions for galpy only
+          python -m pip install `ls -d "$(pwd)"/wheelhouse/*.whl`
       - name: Test built wheel in non-conda environment
         shell: bash
         working-directory: ${{ runner.temp }}

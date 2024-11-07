@@ -280,6 +280,7 @@ jobs:
     - name: Install numba
       if: ${{ matrix.REQUIRES_NUMBA }}
       run: |
+        pip install git+https://github.com/numba/llvmlite.git@main#egg=llvmlite
         pip install git+https://github.com/numba/numba.git@main#egg=numba
         # numba may force install an older version of setuptools,
         # but it isn't actually a *runtime* requirement numba/numba#8366

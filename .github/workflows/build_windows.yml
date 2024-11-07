@@ -244,7 +244,7 @@ jobs:
       run: pip install astroquery
     - name: Install numba
       if: ${{ matrix.REQUIRES_NUMBA }}
-      run: pip install numba
+      run: pip install git+https://github.com/numba/numba.git@main#egg=numba
     - name: Install JAX
       if: ${{ matrix.REQUIRES_JAX }}
       run: pip install jax jaxlib

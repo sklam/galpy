@@ -142,7 +142,7 @@ def RZToverticalPotential(RZPot, R):
         )
     try:
         conversion.get_physical(RZPot)
-    except:
+    except:  # pragma: no cover
         raise PotentialError(
             "Input to 'RZToverticalPotential' is neither an RZPotential-instance or a list of such instances"
         )
@@ -158,7 +158,7 @@ def RZToverticalPotential(RZPot, R):
                 raise PotentialError(
                     "Input to 'RZToverticalPotential' cannot be a planarPotential"
                 )
-            else:
+            else:  # pragma: no cover
                 raise PotentialError(
                     "Input to 'RZToverticalPotential' is neither an RZPotential-instance or a list of such instances"
                 )

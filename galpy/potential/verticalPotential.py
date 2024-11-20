@@ -136,15 +136,15 @@ def RZToverticalPotential(RZPot, R):
 
     """
     RZPot = flatten(RZPot)
-    if _isDissipative(RZPot):
-        raise NotImplementedError(
-            "Converting dissipative forces to 1D vertical potentials is currently not supported"
-        )
     try:
         conversion.get_physical(RZPot)
     except:
         raise PotentialError(
             "Input to 'RZToverticalPotential' is neither an RZPotential-instance or a list of such instances"
+        )
+    if _isDissipative(RZPot):
+        raise NotImplementedError(
+            "Converting dissipative forces to 1D vertical potentials is currently not supported"
         )
     R = conversion.parse_length(R, **conversion.get_physical(RZPot))
     if isinstance(RZPot, list):

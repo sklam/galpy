@@ -261,9 +261,9 @@ jobs:
     - name: Install pynbody (3.13)
       if: ${{ matrix.REQUIRES_PYNBODY && matrix.python-version == '3.13' }}
       run: |
-         pip install --upgrade --upgrade-strategy eager --pre pytz tzdata posix_ipc pandas h5py
+         pip install --upgrade --upgrade-strategy eager h5py pandas pytz
          pip install --upgrade --upgrade-strategy eager wheel
-         pip install --upgrade --upgrade-strategy eager --no-deps --pre git+https://github.com/pynbody/pynbody.git
+         pip install --pre --upgrade --upgrade-strategy eager pynbody
     - name: Install pynbody
       if: ${{ matrix.REQUIRES_PYNBODY && matrix.python-version != '3.13' }}
       run: |

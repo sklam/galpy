@@ -244,8 +244,7 @@ jobs:
     - name: Install numba
       if: ${{ matrix.REQUIRES_NUMBA }}
       run: |
-        pip install git+https://github.com/numba/llvmlite.git@main#egg=llvmlite
-        pip install git+https://github.com/numba/numba.git@main#egg=numba
+        pip install --pre numba
     - name: Install JAX
       if: ${{ matrix.REQUIRES_JAX }}
       run: pip install jax jaxlib

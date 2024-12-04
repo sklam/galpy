@@ -12,9 +12,8 @@ on:
   pull_request:
     paths-ignore:
       - 'doc/**'
-  schedule:
-    - cron: '0 20 * * 2'
-
+  on:
+    workflow_dispatch:
 jobs:
   build:
     runs-on: ${{ matrix.os }}

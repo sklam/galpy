@@ -262,6 +262,10 @@ jobs:
          if ( $REQUIRES_ASTROPY ) { python -c "import astropy; print('astropy: {}'.format(astropy.__version__))"}
          if ( $REQUIRES_ASTROQUERY ) { python -c "import astroquery; print('astroquery: {}'.format(astroquery.__version__))"}
          if ( $REQUIRES_PYNBODY ) {python -c "import pynbody; print('pynbody: {}'.format(pynbody.__version__))"}
+    - name: Test llvmlite
+      shell: bash
+      run: |
+        python -m llvmlite.tests
     - name: Test with pytest
       shell: bash
       env:

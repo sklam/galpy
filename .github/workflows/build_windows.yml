@@ -217,6 +217,7 @@ jobs:
     - name: Set GSL environment 
       shell: bash
       run: |
+         eval "$(micromamba shell hook --shell bash)"
          micromamba activate gsl
          which python
          which pip

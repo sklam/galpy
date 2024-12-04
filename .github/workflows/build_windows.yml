@@ -220,12 +220,8 @@ jobs:
         echo "$CONDA_PREFIX\\Library\\bin" >> $GITHUB_PATH # necessary when we don't activate the environment
 
 
-    - name: Install Visual Studio Build Tools
-      uses: actions/checkout@v2
-      run: |
-        choco install -y --no-progress vstools
-        echo '%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\HostX64\x64' > $GITHUB_PATH
-        
+    - name: Install Dumpbin
+      uses: lorenalexm/install-dumpbin-action@main
     # - name: Install Python dependencies
     #   run: |
     #      pip install --upgrade --upgrade-strategy eager numpy scipy matplotlib numexpr setuptools cython pytest tqdm

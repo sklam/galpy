@@ -208,6 +208,9 @@ jobs:
          condarc: |
             channels:
               - conda-forge
+         init-shell: >-
+          bash
+          powershell
          create-args: gsl python=3.13
          cache-environment: true
          cache-environment-key: ${{ runner.os }}-${{ hashFiles('.github/workflows/build_windows.yml') }}

@@ -211,9 +211,10 @@ jobs:
          create-args: gsl python=3.13
          cache-environment: true
          cache-environment-key: ${{ runner.os }}-${{ hashFiles('.github/workflows/build_windows.yml') }}
-    - name: Set GSL environment variables
+    - name: Set GSL environment 
       shell: bash
       run: |
+         micromamba activate gsl
          which python
          which pip
     # - name: Set GSL environment variables

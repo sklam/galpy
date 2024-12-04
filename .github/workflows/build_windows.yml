@@ -218,27 +218,35 @@ jobs:
         echo "LIB=$CONDA_PREFIX\\Library\\lib" >> $GITHUB_ENV
         echo "LIBPATH=$CONDA_PREFIX\\Library\\lib" >> $GITHUB_ENV
         echo "$CONDA_PREFIX\\Library\\bin" >> $GITHUB_PATH # necessary when we don't activate the environment
-    - name: Install Python dependencies
+
+
+    - name: Install Visual Studio Build Tools
+      uses: actions/checkout@v2
       run: |
-         pip install --upgrade --upgrade-strategy eager numpy scipy matplotlib numexpr setuptools cython pytest tqdm
-    - name: Install pynbody
-      if: ${{ matrix.REQUIRES_PYNBODY }}
-      run: |
-         pip install --upgrade --upgrade-strategy eager h5py pandas pytz
-         pip install --upgrade --upgrade-strategy eager wheel
-         pip install --upgrade --upgrade-strategy eager pynbody
-    - name: Install astropy
-      if: ${{ matrix.REQUIRES_ASTROPY && matrix.python-version != 4.0 }}
-      run: |
-         pip install astropy pyerfa
-    - name: Install astropy (Python 4.0; doesn't exist of course, placeholder for new python v)
-      if: ${{ matrix.REQUIRES_ASTROPY && matrix.python-version == 4.0 }}
-      run: |
-         pip install pyerfa
-         pip install --extra-index-url=https://pkgs.dev.azure.com/astropy-project/astropy/_packaging/nightly/pypi/simple/ --pre astropy
-    - name: Install astroquery
-      if: ${{ matrix.REQUIRES_ASTROQUERY }}
-      run: pip install astroquery
+        choco install -y --no-progress vstools
+        echo '%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\HostX64\x64' > $GITHUB_PATH
+        
+    # - name: Install Python dependencies
+    #   run: |
+    #      pip install --upgrade --upgrade-strategy eager numpy scipy matplotlib numexpr setuptools cython pytest tqdm
+    # - name: Install pynbody
+    #   if: ${{ matrix.REQUIRES_PYNBODY }}
+    #   run: |
+    #      pip install --upgrade --upgrade-strategy eager h5py pandas pytz
+    #      pip install --upgrade --upgrade-strategy eager wheel
+    #      pip install --upgrade --upgrade-strategy eager pynbody
+    # - name: Install astropy
+    #   if: ${{ matrix.REQUIRES_ASTROPY && matrix.python-version != 4.0 }}
+    #   run: |
+    #      pip install astropy pyerfa
+    # - name: Install astropy (Python 4.0; doesn't exist of course, placeholder for new python v)
+    #   if: ${{ matrix.REQUIRES_ASTROPY && matrix.python-version == 4.0 }}
+    #   run: |
+    #      pip install pyerfa
+    #      pip install --extra-index-url=https://pkgs.dev.azure.com/astropy-project/astropy/_packaging/nightly/pypi/simple/ --pre astropy
+    # - name: Install astroquery
+    #   if: ${{ matrix.REQUIRES_ASTROQUERY }}
+    #   run: pip install astroquery
     - name: Install numba
       if: ${{ matrix.REQUIRES_NUMBA }}
       run: |
@@ -248,9 +256,9 @@ jobs:
       run: |
         python -c "import llvmlite; llvmlite.__file__"
         python -m llvmlite.tests -vf
-    - name: Install JAX
-      if: ${{ matrix.REQUIRES_JAX }}
-      run: pip install jax jaxlib
+    # - name: Install JAX
+    #   if: ${{ matrix.REQUIRES_JAX }}
+    #   run: pip install jax jaxlib
     - name: Install package
       run: |
         python -m pip install -ve .

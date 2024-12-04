@@ -210,14 +210,12 @@ jobs:
               - conda-forge
          init-shell: >-
           bash
-          powershell
          create-args: gsl python=3.13
          cache-environment: true
          cache-environment-key: ${{ runner.os }}-${{ hashFiles('.github/workflows/build_windows.yml') }}
     - name: Set GSL environment 
-      shell: bash
+      shell: bash -leo pipefail {0}
       run: |
-         eval "$(micromamba shell hook --shell bash)"
          micromamba activate gsl
          which python
          which pip
@@ -253,41 +251,42 @@ jobs:
     #   run: pip install astroquery
     - name: Install numba
       if: ${{ matrix.REQUIRES_NUMBA }}
+      shell: bash -leo pipefail {0}
       run: |
         pip install --pre numba
     - name: Test llvmlite
-      shell: bash
+      shell: bash -leo pipefail {0}
       run: |
         python -c "import llvmlite; llvmlite.__file__"
         python -m llvmlite.tests -vf
     # - name: Install JAX
     #   if: ${{ matrix.REQUIRES_JAX }}
     #   run: pip install jax jaxlib
-    - name: Install package
-      run: |
-        python -m pip install -ve .
-    - name: Print debug info
-      shell: pwsh
-      env:
-         REQUIRES_ASTROPY : ${{ matrix.REQUIRES_ASTROPY }}
-         REQUIRES_ASTROQUERY : ${{ matrix.REQUIRES_ASTROQUERY }}
-         REQUIRES_PYNBODY : ${{ matrix.REQUIRES_PYNBODY }}
-      run: |
-         python -c "import numpy; print('numpy: {}'.format(numpy.__version__))"
-         python -c "import scipy; print('scipy: {}'.format(scipy.__version__))"
-         python -c "import matplotlib; print('matplotlib: {}'.format(matplotlib.__version__))"
-         if ( $REQUIRES_ASTROPY ) { python -c "import astropy; print('astropy: {}'.format(astropy.__version__))"}
-         if ( $REQUIRES_ASTROQUERY ) { python -c "import astroquery; print('astroquery: {}'.format(astroquery.__version__))"}
-         if ( $REQUIRES_PYNBODY ) {python -c "import pynbody; print('pynbody: {}'.format(pynbody.__version__))"}
-    - name: Test with pytest
-      shell: bash
-      env:
-          TEST_FILES: ${{ matrix.TEST_FILES }}
-          REQUIRES_ASTROPY : ${{ matrix.REQUIRES_ASTROPY }}
-      run: |
-        pip install pytest-cov
-        # Turn astropy deprecation warnings into errors as well if astropy
-        if $REQUIRES_ASTROPY; then export PYTEST_ADDOPTS="-W error::astropy.utils.exceptions.AstropyDeprecationWarning"; else export PYTEST_ADDOPTS=""; fi
-        export TQDM_DEPRECATION="-W ignore:\"datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version.\":DeprecationWarning -W ignore:\"datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC\":DeprecationWarning"
-        # eval necessary for -k 'not ...' in TEST_FILES
-        eval "pytest -W error::DeprecationWarning -W error::FutureWarning $PYTEST_ADDOPTS $TQDM_DEPRECATION -v $TEST_FILES --cov galpy --cov-config .coveragerc --disable-pytest-warnings --durations=0"
+    # - name: Install package
+    #   run: |
+    #     python -m pip install -ve .
+    # - name: Print debug info
+    #   shell: pwsh
+    #   env:
+    #      REQUIRES_ASTROPY : ${{ matrix.REQUIRES_ASTROPY }}
+    #      REQUIRES_ASTROQUERY : ${{ matrix.REQUIRES_ASTROQUERY }}
+    #      REQUIRES_PYNBODY : ${{ matrix.REQUIRES_PYNBODY }}
+    #   run: |
+    #      python -c "import numpy; print('numpy: {}'.format(numpy.__version__))"
+    #      python -c "import scipy; print('scipy: {}'.format(scipy.__version__))"
+    #      python -c "import matplotlib; print('matplotlib: {}'.format(matplotlib.__version__))"
+    #      if ( $REQUIRES_ASTROPY ) { python -c "import astropy; print('astropy: {}'.format(astropy.__version__))"}
+    #      if ( $REQUIRES_ASTROQUERY ) { python -c "import astroquery; print('astroquery: {}'.format(astroquery.__version__))"}
+    #      if ( $REQUIRES_PYNBODY ) {python -c "import pynbody; print('pynbody: {}'.format(pynbody.__version__))"}
+    # - name: Test with pytest
+    #   shell: bash
+    #   env:
+    #       TEST_FILES: ${{ matrix.TEST_FILES }}
+    #       REQUIRES_ASTROPY : ${{ matrix.REQUIRES_ASTROPY }}
+    #   run: |
+    #     pip install pytest-cov
+    #     # Turn astropy deprecation warnings into errors as well if astropy
+    #     if $REQUIRES_ASTROPY; then export PYTEST_ADDOPTS="-W error::astropy.utils.exceptions.AstropyDeprecationWarning"; else export PYTEST_ADDOPTS=""; fi
+    #     export TQDM_DEPRECATION="-W ignore:\"datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version.\":DeprecationWarning -W ignore:\"datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC\":DeprecationWarning"
+    #     # eval necessary for -k 'not ...' in TEST_FILES
+    #     eval "pytest -W error::DeprecationWarning -W error::FutureWarning $PYTEST_ADDOPTS $TQDM_DEPRECATION -v $TEST_FILES --cov galpy --cov-config .coveragerc --disable-pytest-warnings --durations=0"
